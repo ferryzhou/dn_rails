@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Word:</b>
+  <%= @cluster.word_id %>
+</p>
+
+<p>
+  <b>Word en name:</b>
+  <%= @cluster.word_en_name %>
+</p>
+
+<p>
+  <b>Gitem:</b>
+  <%= @cluster.gitem_id %>
+</p>
+
+<p>
+  <b>Title:</b>
+  <%= @cluster.title %>
+</p>
+
+<p>
+  <b>Link:</b>
+  <%= @cluster.link %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @cluster.description %>
+</p>
+
+<p>
+  <b>Size:</b>
+  <%= @cluster.size %>
+</p>
+
+<p>
+  <b>Gmax count:</b>
+  <%= @cluster.gmax_count %>
+</p>
+
+
+<%= link_to 'Edit', edit_cluster_path(@cluster) %> |
+<%= link_to 'Back', clusters_path %>

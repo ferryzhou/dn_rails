@@ -1,4 +1,10 @@
 DnRails::Application.routes.draw do
+  resources :clusters
+
+  resources :gitems
+
+  resources :words
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

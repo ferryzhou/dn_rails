@@ -1,0 +1,65 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Word:</b>
+  <%= @gitem.word_id %>
+</p>
+
+<p>
+  <b>Word en name:</b>
+  <%= @gitem.word_en_name %>
+</p>
+
+<p>
+  <b>Raw title:</b>
+  <%= @gitem.raw_title %>
+</p>
+
+<p>
+  <b>Raw link:</b>
+  <%= @gitem.raw_link %>
+</p>
+
+<p>
+  <b>Raw description:</b>
+  <%= @gitem.raw_description %>
+</p>
+
+<p>
+  <b>Pubdate:</b>
+  <%= @gitem.pubdate %>
+</p>
+
+<p>
+  <b>Title:</b>
+  <%= @gitem.title %>
+</p>
+
+<p>
+  <b>Link:</b>
+  <%= @gitem.link %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @gitem.description %>
+</p>
+
+<p>
+  <b>Source:</b>
+  <%= @gitem.source %>
+</p>
+
+<p>
+  <b>Count:</b>
+  <%= @gitem.count %>
+</p>
+
+<p>
+  <b>Cluster:</b>
+  <%= @gitem.cluster_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_gitem_path(@gitem) %> |
+<%= link_to 'Back', gitems_path %>

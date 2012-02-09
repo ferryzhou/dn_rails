@@ -1,0 +1,45 @@
+<h1>Listing gitems</h1>
+
+<table>
+  <tr>
+    <th>Word</th>
+    <th>Word en name</th>
+    <th>Raw title</th>
+    <th>Raw link</th>
+    <th>Raw description</th>
+    <th>Pubdate</th>
+    <th>Title</th>
+    <th>Link</th>
+    <th>Description</th>
+    <th>Source</th>
+    <th>Count</th>
+    <th>Cluster</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @gitems.each do |gitem| %>
+  <tr>
+    <td><%= gitem.word_id %></td>
+    <td><%= gitem.word_en_name %></td>
+    <td><%= gitem.raw_title %></td>
+    <td><%= gitem.raw_link %></td>
+    <td><%= gitem.raw_description %></td>
+    <td><%= gitem.pubdate %></td>
+    <td><%= gitem.title %></td>
+    <td><%= gitem.link %></td>
+    <td><%= gitem.description %></td>
+    <td><%= gitem.source %></td>
+    <td><%= gitem.count %></td>
+    <td><%= gitem.cluster_id %></td>
+    <td><%= link_to 'Show', gitem %></td>
+    <td><%= link_to 'Edit', edit_gitem_path(gitem) %></td>
+    <td><%= link_to 'Destroy', gitem, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Gitem', new_gitem_path %>

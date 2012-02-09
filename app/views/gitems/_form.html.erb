@@ -1,0 +1,65 @@
+<%= form_for(@gitem) do |f| %>
+  <% if @gitem.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@gitem.errors.count, "error") %> prohibited this gitem from being saved:</h2>
+
+      <ul>
+      <% @gitem.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :word_id %><br />
+    <%= f.number_field :word_id %>
+  </div>
+  <div class="field">
+    <%= f.label :word_en_name %><br />
+    <%= f.text_field :word_en_name %>
+  </div>
+  <div class="field">
+    <%= f.label :raw_title %><br />
+    <%= f.text_field :raw_title %>
+  </div>
+  <div class="field">
+    <%= f.label :raw_link %><br />
+    <%= f.text_field :raw_link %>
+  </div>
+  <div class="field">
+    <%= f.label :raw_description %><br />
+    <%= f.text_area :raw_description %>
+  </div>
+  <div class="field">
+    <%= f.label :pubdate %><br />
+    <%= f.datetime_select :pubdate %>
+  </div>
+  <div class="field">
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :link %><br />
+    <%= f.text_field :link %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_area :description %>
+  </div>
+  <div class="field">
+    <%= f.label :source %><br />
+    <%= f.text_field :source %>
+  </div>
+  <div class="field">
+    <%= f.label :count %><br />
+    <%= f.number_field :count %>
+  </div>
+  <div class="field">
+    <%= f.label :cluster_id %><br />
+    <%= f.number_field :cluster_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

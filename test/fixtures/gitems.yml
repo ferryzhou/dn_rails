@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  word_id: 1
+  word_en_name: MyString
+  raw_title: MyString
+  raw_link: MyString
+  raw_description: MyText
+  pubdate: 2012-02-08 21:31:49
+  title: MyString
+  link: MyString
+  description: MyText
+  source: MyString
+  count: 1
+  cluster_id: 1
+
+two:
+  word_id: 1
+  word_en_name: MyString
+  raw_title: MyString
+  raw_link: MyString
+  raw_description: MyText
+  pubdate: 2012-02-08 21:31:49
+  title: MyString
+  link: MyString
+  description: MyText
+  source: MyString
+  count: 1
+  cluster_id: 1

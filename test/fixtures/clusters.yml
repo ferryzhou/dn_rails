@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  word_id: 1
+  word_en_name: MyString
+  gitem_id: 1
+  title: MyString
+  link: MyString
+  description: MyText
+  size: 1
+  gmax_count: 1
+
+two:
+  word_id: 1
+  word_en_name: MyString
+  gitem_id: 1
+  title: MyString
+  link: MyString
+  description: MyText
+  size: 1
+  gmax_count: 1
