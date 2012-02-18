@@ -2,6 +2,8 @@ rails generate scaffold Word en_name:string title:string link:string category:st
 rails generate scaffold Gitem word_id:integer word_en_name:string raw_title:string raw_link:string raw_description:text pubdate:datetime title:string link:string description:text source:string count:integer cluster_id:integer 
 rails generate scaffold Cluster word_id:integer word_en_name:string gitem_id:integer title:string link:string description:text size:integer gmax_count:integer
 
+bundle exec rake db:migrate
+
 class Word < ActiveRecord::Base
   has_many :gitems
   has_many :clusters
@@ -21,6 +23,8 @@ end
 only admin can change Word table
 
 the program check Word table, do processing and populate Gitem and Cluster table
+
+Offline Processing ---------------->
 
 Kind of workers:
 1. Crawler, regularly retrieve rss feeds and archieve to local directory
@@ -42,6 +46,11 @@ get clusters sort by id,
 	  add if close
 	create new if no close clusters
 
+Rails Based Processing ----------------->
+use heroku job scheduler to run background tasks
+Gitem:: update_feed, update_all
+Cluster: cluster_feed, cluster_all
 
-rails generate migration add_source_to_gnews source:string
-bundle exec rake db:migrate
+for testing, using local archieved feeds
+
+
