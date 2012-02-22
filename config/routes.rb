@@ -1,5 +1,10 @@
 DnRails::Application.routes.draw do
-  resources :clusters
+  resources :clusters do
+    collection do
+      get 'cluster_feed'
+      get 'clear_feed'
+    end
+  end
 
   resources :gitems do
     collection do
