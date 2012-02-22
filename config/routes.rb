@@ -1,7 +1,12 @@
 DnRails::Application.routes.draw do
   resources :clusters
 
-  resources :gitems
+  resources :gitems do
+    collection do
+      get 'update_feed'
+      get 'delete_all'
+    end
+  end
 
   resources :words
 

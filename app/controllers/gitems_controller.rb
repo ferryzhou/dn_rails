@@ -1,4 +1,4 @@
-require './gnews_items_extractor'
+require 'gnews_items_extractor.rb'
 
 class GitemsController < ApplicationController
   # GET /gitems
@@ -82,6 +82,23 @@ class GitemsController < ApplicationController
       format.json { head :ok }
     end
   end
+  
+  
+  def delete_all
+    Gitem.delete_all
+    respond_to do |format|
+      format.html { redirect_to gitems_url }
+      format.json { head :ok }
+    end
+  end
+  
+  def update_feed
+    update_feed_with_url(params[:feed_id], params[:feed_url]);
+    respond_to do |format|
+      format.html { redirect_to gitems_url }
+      format.json { head :ok }
+    end
+  end
 
   def update_feed_with_url(feed_id, feed_url)
     word = Word.find(feed_id)
@@ -96,7 +113,7 @@ class GitemsController < ApplicationController
       #word_id:integer word_en_name:string raw_title:string raw_link:string raw_description:text pubdate:datetime title:string link:string description:text source:string count:integer cluster_id:integer
       p = Gitem.new(
         :word_id => feed_id,
-        :word_en_name => word,
+        :word_en_name => word.en_name,
         :raw_title => gitem.raw_title,
         :raw_description => gitem.raw_description,
         :raw_link => gitem.raw_link,
@@ -105,7 +122,7 @@ class GitemsController < ApplicationController
         :description => gitem.description,
         :pubdate => gitem.date,
         :source => gitem.source,
-	    :count => gitem.count
+        :count => gitem.count
       )
       p.save
       imported_count = imported_count + 1
