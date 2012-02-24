@@ -87,7 +87,7 @@ class ClustersController < ApplicationController
   #============== background processing begin ============>
   
   def cluster_feed
-    cluster_by_word_en_name(params[:feed_name])
+    Clusterer.new.cluster_by_word_en_name(params[:feed_name])
     respond_to do |format|
       format.html { redirect_to clusters_url }
       format.json { head :ok }
@@ -95,46 +95,13 @@ class ClustersController < ApplicationController
   end
   
   def clear_feed
-    clear_cluster_by_name(params[:feed_name])
+    Clusterer.new.clear_cluster_by_name(params[:feed_name])
     respond_to do |format|
       format.html { redirect_to clusters_url }
       format.json { head :ok }
     end
   end
   
-  def cluster_by_word_en_name(name)
-    clusters = Cluster.where(:word_en_name => name).all #modify later, use only recent N clusters
-    un_clustered_items = Gitem.where(:word_en_name => name, :cluster_id => nil).all
-    un_clustered_items.each { |item| cluster_item(item, clusters) }
-  end
-
-  def cluster_item(item, clusters)
-    threshold = 0.5
-    clusters.each { |cluster|
-      if Similarity.new(threshold).is_similar(item, cluster)
-        #cluster.add_gitem(item); 
-        item.cluster_id = cluster.id
-        item.save
-        return; 
-      end
-    }
-    create_cluster_with_item(item, clusters)
-  end
-  
-  def create_cluster_with_item(item, clusters)
-    cluster = Cluster.create(:title => item.title,
-            :word_en_name => item.word_en_name, :description => item.description)
-    #cluster.add_gitem(item)
-    item.cluster_id = cluster.id
-    item.save
-    clusters.push(cluster)
-  end
-
-  def clear_cluster_by_name(name)
-    Cluster.where(:word_en_name => name).delete_all
-    Gitem.where(:word_en_name => name).update_all(:cluster_id => nil)
-  end
-
   #============== background processing end ============>
   
 end

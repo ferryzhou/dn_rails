@@ -93,47 +93,17 @@ class GitemsController < ApplicationController
   end
   
   def update_feed
-    update_feed_with_url(params[:feed_id], params[:feed_url]);
+    Clusterer.new.update_feed_with_url(params[:feed_id], params[:feed_url]);
     respond_to do |format|
       format.html { redirect_to gitems_url }
       format.json { head :ok }
     end
   end
 
-  def update_feed_with_url(feed_id, feed_url)
-    word = Word.find(feed_id)
-    p "import #{feed_id} from #{feed_url} ......"
-    content = open(feed_url).read
-    content.force_encoding('utf-8')
-    feed = RSS::Parser.parse(content); puts 'feed ' + feed.items.size.to_s
-    items = extract_items(feed)
-    ignored_count = 0; imported_count = 0;
-    items.each do |gitem|
-      if !Gitem.where(:link => gitem.link).empty?; ignored_count = ignored_count+1; next; end
-      #word_id:integer word_en_name:string raw_title:string raw_link:string raw_description:text pubdate:datetime title:string link:string description:text source:string count:integer cluster_id:integer
-      p = Gitem.new(
-        :word_id => feed_id,
-        :word_en_name => word.en_name,
-        :raw_title => gitem.raw_title,
-        :raw_description => gitem.raw_description,
-        :raw_link => gitem.raw_link,
-        :title => gitem.title, 
-        :link => gitem.link,
-        :description => gitem.description,
-        :pubdate => gitem.date,
-        :source => gitem.source,
-        :count => gitem.count
-      )
-      p.save
-      imported_count = imported_count + 1
-    end
-    p "imported #{imported_count} items; ignored #{ignored_count} items"
-  end
-
   def update_all_feeds
     words = Word.all
     words.each do | word|
-      update_feed_with_url(word.id, word.link)
+      Clusterer.new.update_feed_with_url(word.id, word.link)
     end
   end
 
