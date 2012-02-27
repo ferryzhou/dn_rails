@@ -1,0 +1,37 @@
+<h1><%= params[:name] %></h1>
+
+<table>
+  <tr>
+    <th>Word</th>
+    <th>Word en name</th>
+    <th>Gitem</th>
+    <th>Title</th>
+    <th>Link</th>
+    <th>Description</th>
+    <th>Size</th>
+    <th>Gmax count</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @clusters.each do |cluster| %>
+  <tr>
+    <td><%= cluster.word_id %></td>
+    <td><%= cluster.word_en_name %></td>
+    <td><%= cluster.gitem_id %></td>
+    <td><%= cluster.title %></td>
+    <td><%= cluster.link %></td>
+    <td><%= cluster.description %></td>
+    <td><%= cluster.size %></td>
+    <td><%= cluster.gmax_count %></td>
+    <td><%= link_to 'Show', cluster %></td>
+    <td><%= link_to 'Edit', edit_cluster_path(cluster) %></td>
+    <td><%= link_to 'Destroy', cluster, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Cluster', new_cluster_path %>

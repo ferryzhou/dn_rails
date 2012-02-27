@@ -3,17 +3,23 @@ DnRails::Application.routes.draw do
     collection do
       get 'cluster_feed'
       get 'clear_feed'
+      get 'channel'
     end
   end
 
   resources :gitems do
     collection do
-      get 'update_feed'
       get 'delete_all'
     end
   end
 
-  resources :words
+  resources :words do
+    collection do
+      get 'update_feed'
+      get 'update_feed_with_url'
+      get 'update_all_feeds'
+    end
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

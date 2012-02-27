@@ -83,7 +83,7 @@ class GitemsController < ApplicationController
     end
   end
   
-  
+  # ================= customed 
   def delete_all
     Gitem.delete_all
     respond_to do |format|
@@ -92,19 +92,4 @@ class GitemsController < ApplicationController
     end
   end
   
-  def update_feed
-    Clusterer.new.update_feed_with_url(params[:feed_id], params[:feed_url]);
-    respond_to do |format|
-      format.html { redirect_to gitems_url }
-      format.json { head :ok }
-    end
-  end
-
-  def update_all_feeds
-    words = Word.all
-    words.each do | word|
-      Clusterer.new.update_feed_with_url(word.id, word.link)
-    end
-  end
-
 end

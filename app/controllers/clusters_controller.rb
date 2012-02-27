@@ -86,8 +86,17 @@ class ClustersController < ApplicationController
 
   #============== background processing begin ============>
   
+  def channel
+    @clusters = Cluster.where(:word_en_name => params[:name]).all
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @clusters }
+    end
+  end
+  
   def cluster_feed
-    Clusterer.new.cluster_by_word_en_name(params[:feed_name])
+    Clusterer.new.cluster_by_word_en_name(params[:name])
     respond_to do |format|
       format.html { redirect_to clusters_url }
       format.json { head :ok }
@@ -95,7 +104,7 @@ class ClustersController < ApplicationController
   end
   
   def clear_feed
-    Clusterer.new.clear_cluster_by_name(params[:feed_name])
+    Clusterer.new.clear_cluster_by_name(params[:name])
     respond_to do |format|
       format.html { redirect_to clusters_url }
       format.json { head :ok }

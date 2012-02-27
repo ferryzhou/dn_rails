@@ -1,10 +1,11 @@
-# given item model and cluster model
+# rails: given Word, Gitem and Cluster model
 # 
 
 require 'similarity'
 
 class Clusterer
 
+  #update gitems and clusters
   def update_feed_with_url(feed_id, feed_url)
     word = Word.find(feed_id)
     clusters = word.clusters
@@ -36,18 +37,14 @@ class Clusterer
     end
     p "imported #{imported_count} items; ignored #{ignored_count} items"
   end
-
-  def cluster_by_word_en_name(name)
-    clusters = Cluster.where(:word_en_name => name).all #modify later, use only recent N clusters
-    un_clustered_items = Gitem.where(:word_en_name => name, :cluster_id => nil).all
-    un_clustered_items.each { |item| cluster_item(item, clusters) }
-  end
-
+  
   def cluster_item(item, clusters)
     threshold = 0.5
     clusters.each { |cluster|
       if Similarity.new(threshold).is_similar(item, cluster)
         cluster.gitems.push(item);
+        cluster.size = cluster.gitems.size;
+        cluster.gmax_count = item.count if (cluster.gmax_count < item.count) 
         cluster.save
         return; 
       end
@@ -56,16 +53,29 @@ class Clusterer
   end
   
   def create_cluster_with_item(item, clusters)
-    cluster = Cluster.create(:title => item.title,
-            :word_en_name => item.word_en_name, :description => item.description)
+    cluster = Cluster.create(
+                 :title => item.title,
+                 :word_en_name => item.word_en_name, 
+                 :description => item.description,
+                 :link => item.link,
+                 :size => 1,
+                 :gmax_count => item.count)
     cluster.gitems.push(item);
     cluster.save
     clusters.push(cluster)
   end
 
+  # cut association between Gitem and Cluster and clear the clustered items
   def clear_cluster_by_name(name)
     Cluster.where(:word_en_name => name).delete_all
     Gitem.where(:word_en_name => name).update_all(:cluster_id => nil)
+  end
+
+  # cluster those unclustered items
+  def cluster_by_word_en_name(name)
+    clusters = Cluster.where(:word_en_name => name).all #modify later, use only recent N clusters
+    un_clustered_items = Gitem.where(:word_en_name => name, :cluster_id => nil).all
+    un_clustered_items.each { |item| cluster_item(item, clusters) }
   end
 
 end

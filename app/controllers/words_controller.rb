@@ -80,4 +80,43 @@ class WordsController < ApplicationController
       format.json { head :ok }
     end
   end
+  
+  #============= Custom functions ==========>
+  def update_feed
+    @word = Word.find(params[:id])
+    Clusterer.new.update_feed_with_url(params[:id], @word.link)
+    respond_to do |format|
+      format.html { redirect_to words_url }
+      format.json { head :ok }
+    end
+  end
+  
+  def update_feed_with_url
+    Clusterer.new.update_feed_with_url(params[:id], params[:feed_url]);
+    respond_to do |format|
+      format.html { redirect_to gitems_url }
+      format.json { head :ok }
+    end
+  end
+
+  def update_all_feeds
+    words = Word.all
+    words.each do | word|
+      Clusterer.new.update_feed_with_url(word.id, word.link)
+    end
+    respond_to do |format|
+      format.html { redirect_to words_url }
+      format.json { head :ok }
+    end
+  end
+
+  # clear all contents in gitems and clusters
+  def clear_contents
+    Gitem.delete_all
+    Cluster.delete_all
+    respond_to do |format|
+      format.html { redirect_to words_url }
+      format.json { head :ok }
+    end
+  end  
 end
